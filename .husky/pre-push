@@ -1,0 +1,25 @@
+#!/bin/sh
+echo "触发 pre-push"
+npx lint-staged
+
+cur_branch="$(git rev-parse --abbrev-ref HEAD)"
+forbiddenBranch=('origin/release/dev' 'origin/release/test' 'origin/release/uat' 'release/dev' 'release/test' 'release/uat')
+for branch in ${forbiddenBranch[@]}
+do
+    git_log="$(git log --grep="branch '$branch' into $cur_branch")"
+    git_log1="$(git log --grep="branch '$branch' into '$cur_branch'")"
+    if [[ $git_log || $git_log1 ]];then
+        echo '当前分支被污染，请手动处理!'
+        echo '请不要合并 release/dev release/test release/uat 分支到当前分支!'
+        exit 1
+    fi
+done
+
+if [[ "$cur_branch" =~ ^(dev|feat|fix|hotfix)(-ID[0-9]{7}){0,10}-20[0-9]{6}(-[0-9a-zA-Z]{2,20}){1,3}$ || "$cur_branch" =~ ^release\/(dev|test|uat)$ || "$cur_branch" =~ "feature/sonar" ]];then
+    echo "pre-push通过"
+else
+    echo "你的分支名\"$cur_branch\"不规范，不能push"
+    echo "规范分支名例如：dev-ID1234567-20220831-xxxx fix-ID1234567-20220831-xxx-xxx hotfix-ID1234567-ID7654321-20220831-xxxxxxx"
+    exit 1
+fi
+

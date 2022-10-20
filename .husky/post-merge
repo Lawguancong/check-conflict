@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "触发 post-merge"

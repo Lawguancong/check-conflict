@@ -1,0 +1,17 @@
+#!/bin/sh
+echo "触发 pre-merge-commit"
+
+# cur_dir=$(dirname $(pwd))
+# MERGE_HEAD_PATH="$cur_dir/driver-webapp/.git/MERGE_HEAD"
+# echo "MERGE_HEAD_PATH $MERGE_HEAD_PATH"
+# if [[ ! -e "$MERGE_HEAD_PATH" ]]; then
+#  echo "MERGE_HEAD 文件不存在"
+# else
+#  echo "MERGE_HEAD 文件存在"
+# fi
+# git rev-parse -q --verify MERGE_HEAD
+# (git rev-parse -q --verify MERGE_HEAD || git rev-parse -q --verify REBASE_HEAD) || (skip_this_if_merging_or_rebasing)
+# MERGE_HEAD="$(git rev-parse -q --verify MERGE_HEAD)"
+# echo "MERGE_HEAD $MERGE_HEAD"
+# exit 1
+

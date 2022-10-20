@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "触发 commit-msg"
+
+npx --no-install commitlint --edit "$1"
+
